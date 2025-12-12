@@ -9,9 +9,35 @@
 	<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda+SC:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="assets/reset.css">
- 	<link rel="stylesheet" href="assets/style.css">
+	<link rel="stylesheet" href="assets/style.css">
 </head>
+
 <body>
-	<h1>Hello, World!</h1>
+	<header>
+		<h1>Color Palette Generator</h1>
+		<p class="subheading">Whatever goes here</p>
+	</header>
+	<main>
+		<form id="dropdown-form">
+			<div class="seed-picker-wrapper">
+				<input type="color" id="seed-picker" name="seed picker" class="seed-picker" aria-label="color picker" />
+			</div>
+			<div class="dropdown-wrapper">
+				<select id="mode-dropdown" name="scheme-modes" class="dropdown">
+					<option  value="default">Choose a color scheme</option>
+					<option value="monochrome">Monochrome</option>
+					<option value="iceCream">Ice Cream</option>
+					<option value="minty">Minty</option>
+				</select>
+			</div>
+			<button type="submit" value="Create Palette" class="create-palette-btn"><span>Create Palette</span></button>
+		</form>
+		<div id="generated-palette"></div>
+	</main>
+	<footer>
+		<hr />
+		<p>This is a footer placeholder.</p>
+	</footer>
+	<script src="index.js"></script>
 </body>
 </html>
