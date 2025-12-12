@@ -1,11 +1,6 @@
 const modeDropdown = document.getElementById('mode-dropdown')
 const dropdownForm = document.getElementById('dropdown-form')
 const generatedPalette = document.getElementById('generated-palette')
-const paletteModes = {
-	monochrome: monochromeArray,
-	iceCream: iceCreamArray,
-	minty: mintyArray
-}
 let currentColorIndex = 0
 let mode = ''
 
@@ -13,6 +8,12 @@ let mode = ''
 let monochromeArray = ["#03045e", "#0077b6", "#00b4d8", "#90e0ef", "#caf0f8"]
 let iceCreamArray = ["#96bac1", "#dfcb92", "#f3f6f4", "#dcc5c5", "#c0baba"]
 let mintyArray = ["#255544", "#089382", "#d70900", "#8abeb9", "#dcd5cb"]
+
+const paletteModes = {
+	monochrome: monochromeArray,
+	iceCream: iceCreamArray,
+	minty: mintyArray
+}
 
 dropdownForm.addEventListener('submit', (e) => {
 	e.preventDefault()
