@@ -51,32 +51,42 @@ main {
 footer {
    flex: 0 1 auto;
    margin-block: .8em;
-
-   hr {
-      border: 1px solid navy;
-      width: 70%;
-   }
 }
 
 /* ========== TYPOGRAPHY ========== */
 
-h1,
-p {
+.geom-font {
+   font-family: "Geom", sans-serif;
+   font-optical-sizing: auto;
+   font-style: normal;
+}
+
+h1, p, form {
+   font-family: "Geom", sans-serif;
    text-align: center;
-   font-variant: petite-caps;
-   line-height: 1.2;
-   text-wrap: balance;
 }
 
-h1 {
-   font-size: clamp(1.5rem, 6.7vw, 4.4rem);
-   width: min(95%, (var(--max-width) - 2rem));
-}
+/* ========== HEADER ========== */
 
-p.subheading {
-   font-size: clamp(1rem, 0.5rem + 2.4vw, 2.1rem);
-   font-weight: 450;
-   max-width: 92%;
+header {
+   h1, p.subheading {
+      line-height: 1.2;
+      text-wrap: balance;
+      letter-spacing: 0.011em;
+   }
+
+   h1 {
+      font-size: clamp(1.5rem, 6.65vw, 4.4rem);
+      font-variant: petite-caps;
+      width: min(95%, (var(--max-width) - 2rem));
+   }
+
+   p.subheading {
+      font-size: clamp(1rem, 0.5rem + 4vw, 2.4rem);
+      font-weight: 500;
+      font-variant: all-petite-caps;
+      max-width: 93%;
+   }
 }
 
 /* ========== FORM ========== */
@@ -88,8 +98,10 @@ form {
    align-content: stretch;
    justify-content: stretch;
 
-   >* {
-      height: 46px;
+   > * {
+      height: 47px;
+      font-size: 1rem;
+      padding-block: .5px;
    }
 }
 
@@ -97,110 +109,101 @@ form {
    flex: 0 0 auto;
    aspect-ratio: 1 / 1;
    border: white 1px solid;
-}
 
-input[type="color"] {
-   aspect-ratio: 1/1;
-   font-size: .5em;
-   height: 100%;
-   border: none;
-   padding: 0;
-	appearance: none;
-}
+   > input[type="color"] {
+      aspect-ratio: 1/1;
+      font-size: .5em;
+      height: 100%;
+      border: none;
+      padding: 0;
+   }
 
-input[type="color"]::-webkit-color-swatch-wrapper {
-	padding: 0;
+   > input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+   }
 }
 
 .dropdown-wrapper {
-	flex: 1 1 auto;
+   flex: 1 1 auto;
 	border: 1px white solid;
+
+   select.dropdown {
+      height: 100%;
+      width: 100%;
+      border: 2px black solid;
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: center;
+   }
 }
 
-select.dropdown {
-	height: 100%;
-	width: 100%;
-	border: 2px black solid;
-	font-size: 1.1rem;
-	text-align: center;
-}
+/* ========== BUTTON ========== */
 
-/* TODO: This might have to be an input tag, but i changed it to use a cool affect on the text. Do I need to switch back? */
-/* input[type="submit"] { */
-button {
+/* Loosely based on the BIG Jelly Button from https://codepen.io/arronhunt/pen/WWOOeO. Original source from Mathias Adam: https://dribbble.com/shots/6209185-BIG-Jelly-Button */
+.create-palette-btn {
    flex: 1 1 auto;
    font-size: 1.1rem;
+   font-weight: 600;
+   line-height: 2.5rem;
    color: var(--white);
    text-shadow: 0 -.5px 0.8px var(--darkest-ice-blue);
-   font-weight: 500;
-   background-color: var(--ice-blue);
-   border-radius: 20px;
-   padding-inline: 1.5rem;
-}
-
-button.create-palette-btn {
    cursor: pointer;
    position: relative;
    padding-inline: 1.5rem;
-   border-radius: 3.75rem;
-   line-height: 2.5rem;
-   font-weight: 600;
-
    border: 1px solid var(--ice-blue);
+   border-radius: 3.75rem;
+   background-color: var(--ice-blue);
    background-image: linear-gradient(-180deg, var(--ice-blue) 0%, var(--darkest-ice-blue) 100%);
    box-shadow:
       0 -0.25rem 1.5rem var(--darkest-ice-blue) inset,
       0 0.75rem 0.5rem var(--ice-blue) inset,
       0 0.25rem 0.5rem 0 var(--med-ice-blue) inset;
-}
 
-/* TODO: came from a different button style... keep or no? */
-.create-palette-btn:hover {
-   box-shadow: rgba(255, 255, 255, .2) 0 3px 15px inset,
-      rgba(0, 0, 0, .1) 0 3px 5px,
-      rgba(0, 0, 0, .1) 0 10 13px;
-   transform: scale(1.025);
-}
+   &:hover {
+      transform: scale(1.025);
+   }
 
-/* Loosely based on the BIG Jelly Button from https://codepen.io/arronhunt/pen/WWOOeO. Original source from Mathias Adam: https://dribbble.com/shots/6209185-BIG-Jelly-Button */
-.create-palette-btn span {
-   color: var(--white);
-   /* background-image: linear-gradient(0deg, var(--dark-ice-blue) 0%, var(--light-ice-blue) 100%); */
-   background-clip: text;
-   filter: drop-shadow(0 2px 2px var(--darkest-ice-blue));
-}
+   /* TODO: I don't think any of the below styles are working since I switched the button tag back to an input tag. Will the button tag be ok?  */
 
-/* makes the reflective line near the top */
-.create-palette-btn::before {
-   content: "";
-   display: block;
-   height: 0.1rem;
-   position: absolute;
-   top: 0.3rem;
-   left: 50%;
-   transform: translateX(-50%);
-   width: calc(100% - 6.5rem);
-   background: var(--white);
-   border-radius: 100%;
-   opacity: 0.7;
-   background-image: linear-gradient(-270deg, rgba(255, 255, 255, 0.00) 0%, #FFFFFF 20%, #FFFFFF 80%, rgba(255, 255, 255, 0.00) 100%);
-}
+   /* &span {
+      color: var(--white);
+      background-image: linear-gradient(0deg, var(--dark-ice-blue) 0%, var(--light-ice-blue) 100%);
+      background-clip: text;
+      filter: drop-shadow(0 2px 2px var(--darkest-ice-blue));
+   } */
 
-/* creates a VERY light reflective line under the text */
-.create-palette-btn::after {
-   content: "";
-   display: block;
-   height: 0.25rem;
-   position: absolute;
-   bottom: 0.75rem;
-   left: 50%;
-   transform: translateX(-50%);
-   width: calc(100% - 7.5rem);
-   background: #fff;
-   border-radius: 100%;
-   filter: blur(1px);
-   opacity: 0.05;
-   background-image: linear-gradient(-270deg, rgba(255, 255, 255, 0.00) 0%, #FFFFFF 20%, #FFFFFF 80%, rgba(255, 255, 255, 0.00) 100%);
+   /* makes the reflective line near the top */
+   /* &::before {
+      content: "";
+      display: block;
+      height: 0.1rem;
+      position: absolute;
+      top: 0.3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 6.5rem);
+      background: var(--white);
+      border-radius: 100%;
+      opacity: 0.7;
+      background-image: linear-gradient(-270deg, rgba(255, 255, 255, 0.00) 0%, #FFFFFF 20%, #FFFFFF 80%, rgba(255, 255, 255, 0.00) 100%);
+   } */
+
+   /* creates a VERY light reflective line under the text */
+   /* &::after {
+      content: "";
+      display: block;
+      height: 0.25rem;
+      position: absolute;
+      bottom: 0.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 7.5rem);
+      background: #fff;
+      border-radius: 100%;
+      filter: blur(1px);
+      opacity: 0.05;
+      background-image: linear-gradient(-270deg, rgba(255, 255, 255, 0.00) 0%, #FFFFFF 20%, #FFFFFF 80%, rgba(255, 255, 255, 0.00) 100%);
+   } */
 }
 
 /* ========== PALETTE ========== */
@@ -208,11 +211,12 @@ button.create-palette-btn {
 #generated-palette {
    flex: 1 1 auto;
    display: grid;
-   grid-template-columns: repeat(5, 1fr);
+   grid-auto-flow: column;
+   grid-template-columns: auto;
    margin-inline: .25em;
    background: linear-gradient(in hsl longer hue 90deg, #b36a9b, cadetblue);
 
-   >div.color {
+   > div.color {
       display: grid;
       grid-template-rows: 1fr 2em;
       gap: .25em;

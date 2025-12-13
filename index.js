@@ -1,37 +1,33 @@
-const modeDropdown = document.getElementById('mode-dropdown')
-const dropdownForm = document.getElementById('dropdown-form')
+const colorForm = document.getElementById('color-form')
 const generatedPalette = document.getElementById('generated-palette')
+const modeDropdown = document.getElementById('mode-dropdown')
+let schemeMode = ''
+let seedColor = ''
 let currentColorIndex = 0
-let mode = ''
+let fetchedPaletteArray = []
 
-// REMOVE: Temporary hardcoded values
-let monochromeArray = ["#03045e", "#0077b6", "#00b4d8", "#90e0ef", "#caf0f8"]
-let iceCreamArray = ["#96bac1", "#dfcb92", "#f3f6f4", "#dcc5c5", "#c0baba"]
-let mintyArray = ["#255544", "#089382", "#d70900", "#8abeb9", "#dcd5cb"]
+createOptions()
 
-const paletteModes = {
-	monochrome: monochromeArray,
-	iceCream: iceCreamArray,
-	minty: mintyArray
-}
-
-dropdownForm.addEventListener('submit', (e) => {
+colorForm.addEventListener('submit', (e) => {
 	e.preventDefault()
-	mode = modeDropdown.value
-	generatePalette(mode)
+	resetAll()
+	let formValues = Object.fromEntries(new FormData(colorForm));
+	({ seedColor, schemeMode } = formValues)
+	seedColor = seedColor.slice(1)
+
+	let paletteQuery = `https://www.thecolorapi.com/scheme?hex=${seedColor}&mode=${schemeMode}`
+	fetch(paletteQuery)
+		.then(response => response.json())
+		.then(data => {
+			let myColors = data.colors
+			myColors.forEach(color => {
+				fetchedPaletteArray.push(color.hex.value)
+			})
+			createHtml()
+		})
 })
 
-function generatePalette(mode) {
-	resetAll()
-	const fetchedPaletteArray = fetchPalette(mode)
-	createHtml(fetchedPaletteArray)
-}
-
-function fetchPalette(mode) {
-	return paletteModes[mode] || (generatedPalette.style.background = '')
-}
-
-function createHtml(fetchedPaletteArray) {
+function createHtml() {
 	fetchedPaletteArray.forEach(colorInArray => {
 		let hexValue = fetchedPaletteArray[currentColorIndex]
 		const colorWrapper = document.createElement('div')
@@ -55,4 +51,16 @@ function resetAll() {
 	fetchedPaletteArray = []
 	generatedPalette.replaceChildren()
 	generatedPalette.style.background = 'none'
+}
+
+// ToDo: add removal of dashes; change counts for palettes with fewer colors
+function createOptions() {
+	const optionList = ['monochrome', 'monochrome-dark', 'monochrome-light', 'analogic', 'complement', 'analogic-complement', 'triad', 'quad']
+	let optionsHtml = `
+		<option value=""
+		class="scheme-option">Select a color scheme</option>`
+	optionList.forEach(optionType =>
+		optionsHtml += `<option value="${optionType}"><li>${optionType}</li></option>`
+	)
+	modeDropdown.innerHTML = optionsHtml
 }
