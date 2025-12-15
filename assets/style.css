@@ -1,14 +1,16 @@
 :root {
-   --sides: 3%;
-   --tint-ice-blue: #edf3f4;
-   --light-ice-blue: #dde8eb;
-   --ice-blue: #bdd3d8;
-   --medium-ice-blue: #9dbec5;
-   --dark-ice-blue: #7da8b3;
-   --darkest-ice-blue: #5d929f;
+   --tint-ice-blue: #dde8eb;
+   --light-ice-blue: #bdd3d8;
+   --ice-blue: #9dbec5;
+   --medium-ice-blue: #7da8b3;
+   --dark-ice-blue: #5d929f;
+   --darker-ice-blue: #45686F;
+   --darkest-ice-blue: #30484D;
    --white: #f8f8f8;
    --black: #121212;
+   --black-border: solid 2px #000000;
    --max-width: 900px;
+   --sides: 3%;
 }
 
 /* ========== LAYOUT ========== */
@@ -32,12 +34,11 @@ main,
 footer {
    margin-inline: auto;
    width: min(100%, var(--max-width));
-
 }
 
 header {
    flex: 0 1 auto;
-   margin-block: .8em;
+   margin-block: 1.4em 0.7em;
 }
 
 main {
@@ -49,21 +50,24 @@ main {
 }
 
 footer {
-   flex: 0 1 auto;
-   margin-block: .8em;
+   .copy-instructions {
+      flex: 0 1 auto;
+      margin-block: 0 .8em;
+      font-weight: 400;
+
+      p:last-child {
+         margin-top: .5em;
+      }
+   }
 }
 
 /* ========== TYPOGRAPHY ========== */
 
-.geom-font {
-   font-family: "Geom", sans-serif;
-   font-optical-sizing: auto;
-   font-style: normal;
-}
-
 h1, p, form {
    font-family: "Geom", sans-serif;
    text-align: center;
+   font-optical-sizing: auto;
+   font-style: normal;
 }
 
 /* ========== HEADER ========== */
@@ -76,7 +80,7 @@ header {
    }
 
    h1 {
-      font-size: clamp(1.5rem, 6.65vw, 4.4rem);
+      font-size: clamp(1rem, 6.6vw, 4.4rem);
       font-variant: petite-caps;
       width: min(95%, (var(--max-width) - 2rem));
    }
@@ -94,7 +98,7 @@ header {
 form {
    display: flex;
    flex-wrap: wrap;
-   gap: 1em;
+   gap: 0.9em;
    align-content: stretch;
    justify-content: stretch;
 
@@ -105,17 +109,19 @@ form {
    }
 }
 
-.seed-picker-wrapper {
-   flex: 0 0 auto;
-   aspect-ratio: 1 / 1;
-   border: white 1px solid;
+.seed-color-input-wrapper {
+   display: flex;
+   flex: 1 0 47px;
+   align-items: center;
+   max-width: 10rem;
+   border: solid  0.75px var(--white);
 
    > input[type="color"] {
-      aspect-ratio: 1/1;
       font-size: .5em;
-      height: 100%;
-      border: none;
-      padding: 0;
+      min-height: 100%;
+      width: 100%;
+      border: var(--black-border);
+      outline: none;
    }
 
    > input[type="color"]::-webkit-color-swatch-wrapper {
@@ -124,16 +130,26 @@ form {
 }
 
 .dropdown-wrapper {
-   flex: 1 1 auto;
-	border: 1px white solid;
+   container-type: inline-size;
+   container-name: dropdown;
+   flex: 2 1 13rem;
+	border: solid 1px var(--white);
 
-   select.dropdown {
+   select.mode-dropdown {
       height: 100%;
       width: 100%;
-      border: 2px black solid;
+      border: var(--black-border);
       font-size: 1rem;
       font-weight: 500;
       text-align: center;
+   }
+}
+
+/* necessary? */
+@container dropdown (width > 560px) {
+   select.mode-dropdown {
+      font-size: clamp(.95rem, .8rem + 0.5cqw, 1.2rem);
+      background-color: red;
    }
 }
 
@@ -141,21 +157,21 @@ form {
 
 /* Loosely based on the BIG Jelly Button from https://codepen.io/arronhunt/pen/WWOOeO. Original source from Mathias Adam: https://dribbble.com/shots/6209185-BIG-Jelly-Button */
 .create-palette-btn {
-   flex: 1 1 auto;
+   flex: 1 1 9rem;
+   position: relative;
    font-size: 1.1rem;
    font-weight: 600;
    line-height: 2.5rem;
    color: var(--white);
    text-shadow: 0 -.5px 0.8px var(--darkest-ice-blue);
-   cursor: pointer;
-   position: relative;
-   padding-inline: 1.5rem;
    border: 1px solid var(--ice-blue);
    border-radius: 3.75rem;
    background-color: var(--ice-blue);
-   background-image: linear-gradient(-180deg, var(--ice-blue) 0%, var(--darkest-ice-blue) 100%);
+   cursor: pointer;
+   padding-inline: 1.5rem;
+   background-image: linear-gradient(-180deg, var(--ice-blue) 0%, var(--darker-ice-blue) 100%);
    box-shadow:
-      0 -0.25rem 1.5rem var(--darkest-ice-blue) inset,
+      0 -0.25rem 1.5rem var(--darker-ice-blue) inset,
       0 0.75rem 0.5rem var(--ice-blue) inset,
       0 0.25rem 0.5rem 0 var(--med-ice-blue) inset;
 
@@ -169,7 +185,7 @@ form {
       color: var(--white);
       background-image: linear-gradient(0deg, var(--dark-ice-blue) 0%, var(--light-ice-blue) 100%);
       background-clip: text;
-      filter: drop-shadow(0 2px 2px var(--darkest-ice-blue));
+      filter: drop-shadow(0 2px 2px var(--darker-ice-blue));
    } */
 
    /* makes the reflective line near the top */
@@ -218,8 +234,41 @@ form {
 
    > div.color {
       display: grid;
-      grid-template-rows: 1fr 2em;
+      grid-template-rows: 1fr ;
       gap: .25em;
       height: 100%;
+      > p.hex-label {
+         padding: 0.2em 0.4em;
+      }
+   }
+}
+
+@media(width < 560px) {
+   form > .seed-color-input-wrapper {
+      max-width: unset;
+      flex: 2 0 47px;
+   }
+
+   #generated-palette {
+      grid-auto-flow: row;
+      div.color {
+         grid-template-rows: 1fr;
+
+         > div.color-box {   /* parent of each color */
+            grid-area: 1 / 1 / 2 / 2;
+            z-index: 5;
+         }
+         > p.hex-label {
+            grid-area: 1 / 1 / 2 / 2;
+            z-index: 10;
+            align-self: center;
+            text-shadow: 0 0 2px var(--black);
+            -webkit-text-stroke: 0.5px #000000d0;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            font-size: clamp(1rem, 0.3rem + 4vw, 1.4rem);
+            text-transform: lowercase;
+         }
+      }
    }
 }
