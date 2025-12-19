@@ -10,6 +10,15 @@ let fetchedPaletteArray = []
 
 createOptions()
 
+// input box & button updated with seedColor
+seedColorInput.addEventListener('mouseleave', (event) => {
+	setTimeout(() => {
+		seedColor = event.target.value
+		schemeDropdown.style.backgroundColor = `${seedColor}40`
+		document.getElementsByTagName('html')[0].style.setProperty('--btn-color', seedColor)
+	}, 200)
+})
+
 colorForm.addEventListener('submit', (e) => {
 	e.preventDefault()
 	resetAll()
@@ -26,8 +35,6 @@ colorForm.addEventListener('submit', (e) => {
 
 	// get count from data attribute
 	colorCount = selectedOption.dataset.count
-
-
 
 	let paletteQuery = `https://www.thecolorapi.com/scheme?hex=${seedColor}&mode=${schemeMode}&count=${colorCount}`
 	fetch(paletteQuery)
@@ -78,5 +85,5 @@ function createOptions() {
 	optionList.forEach(optionType =>
 		optionsHtml += `<option value="${optionType[0]}" data-count=${optionType[1]}>${optionType[0]}</option>`
 	)
-	modeDropdown.innerHTML = optionsHtml
+	schemeDropdown.innerHTML = optionsHtml
 }

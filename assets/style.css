@@ -8,9 +8,10 @@
    --darkest-ice-blue: #30484D;
    --white: #f8f8f8;
    --black: #121212;
-   --black-border: solid 2px #000000;
+	--black-border: solid .2px #000000;
    --max-width: 900px;
    --sides: 3%;
+	--btn-color: #31d3d6;
 }
 
 /* ========== LAYOUT ========== */
@@ -95,6 +96,10 @@ header {
 
 /* ========== FORM ========== */
 
+input, select {
+	cursor: pointer;
+}
+
 form {
    display: flex;
    flex-wrap: wrap;
@@ -135,7 +140,7 @@ form {
    flex: 2 1 13rem;
 	border: solid 1px var(--white);
 
-   select.mode-dropdown {
+	select.scheme-dropdown {
       height: 100%;
       width: 100%;
       border: var(--black-border);
@@ -145,81 +150,55 @@ form {
    }
 }
 
-/* necessary? */
-@container dropdown (width > 560px) {
-   select.mode-dropdown {
-      font-size: clamp(.95rem, .8rem + 0.5cqw, 1.2rem);
-      background-color: red;
-   }
-}
-
 /* ========== BUTTON ========== */
 
-/* Loosely based on the BIG Jelly Button from https://codepen.io/arronhunt/pen/WWOOeO. Original source from Mathias Adam: https://dribbble.com/shots/6209185-BIG-Jelly-Button */
 .create-palette-btn {
    flex: 1 1 9rem;
-   position: relative;
    font-size: 1.1rem;
    font-weight: 600;
-   line-height: 2.5rem;
+	border: none;
+	border-radius: 3em;
+	padding: 10px 20px;
    color: var(--white);
-   text-shadow: 0 -.5px 0.8px var(--darkest-ice-blue);
-   border: 1px solid var(--ice-blue);
-   border-radius: 3.75rem;
-   background-color: var(--ice-blue);
-   cursor: pointer;
-   padding-inline: 1.5rem;
-   background-image: linear-gradient(-180deg, var(--ice-blue) 0%, var(--darker-ice-blue) 100%);
-   box-shadow:
-      0 -0.25rem 1.5rem var(--darker-ice-blue) inset,
-      0 0.75rem 0.5rem var(--ice-blue) inset,
-      0 0.25rem 0.5rem 0 var(--med-ice-blue) inset;
+	text-shadow: 0 -.25px 2.5px var(--black);
+	position: relative;
+	overflow: hidden;
+	transition: background 0.3s ease;
+	background-color: white;
+	background: linear-gradient(to bottom, var(--btn-color), color-mix(in srgb, var(--btn-color), black 55%));
+	/* TODO: I don't think this is working. */
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
 
-   &:hover {
-      transform: scale(1.025);
-   }
-
-   /* TODO: I don't think any of the below styles are working since I switched the button tag back to an input tag. Will the button tag be ok?  */
-
-   /* &span {
-      color: var(--white);
-      background-image: linear-gradient(0deg, var(--dark-ice-blue) 0%, var(--light-ice-blue) 100%);
-      background-clip: text;
-      filter: drop-shadow(0 2px 2px var(--darker-ice-blue));
-   } */
-
-   /* makes the reflective line near the top */
-   /* &::before {
-      content: "";
-      display: block;
-      height: 0.1rem;
+/* The shiny/glossy overlay effect */
+.create-palette-btn::before {
+	content: '';
       position: absolute;
-      top: 0.3rem;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 6.5rem);
-      background: var(--white);
-      border-radius: 100%;
-      opacity: 0.7;
-      background-image: linear-gradient(-270deg, rgba(255, 255, 255, 0.00) 0%, #FFFFFF 20%, #FFFFFF 80%, rgba(255, 255, 255, 0.00) 100%);
-   } */
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 50%;
+	/* Creates a transparent white gradient overlay for the "shine" */
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+	border-radius: 5px 5px 0 0;
+	opacity: 1;
+	transition: opacity 0.3s ease;
+}
 
-   /* creates a VERY light reflective line under the text */
-   /* &::after {
-      content: "";
-      display: block;
-      height: 0.25rem;
-      position: absolute;
-      bottom: 0.75rem;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 7.5rem);
-      background: #fff;
-      border-radius: 100%;
-      filter: blur(1px);
-      opacity: 0.05;
-      background-image: linear-gradient(-270deg, rgba(255, 255, 255, 0.00) 0%, #FFFFFF 20%, #FFFFFF 80%, rgba(255, 255, 255, 0.00) 100%);
-   } */
+.create-palette-btn:hover {
+	/* Slightly darker on hover */
+	background: linear-gradient(to bottom, color-mix(in srgb, var(--btn-color), black 10%), color-mix(in srgb, var(--btn-color), black 30%));
+}
+
+.create-palette-btn:hover::before {
+	opacity: 0.8;
+	/* Subtle change to shine on hover */
+}
+
+.create-palette-btn:active {
+	transform: translateY(1px);
+	/* Pushed effect on click */
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* ========== PALETTE ========== */
@@ -230,7 +209,8 @@ form {
    grid-auto-flow: column;
    grid-template-columns: auto;
    margin-inline: .25em;
-   background: linear-gradient(in hsl longer hue 90deg, #b36a9b, cadetblue);
+	background: linear-gradient(in hsl longer hue 90deg, #b36a9b80, #31d3d680);
+	opacity: 1;
 
    > div.color {
       display: grid;
