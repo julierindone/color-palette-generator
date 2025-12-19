@@ -1,7 +1,8 @@
 const colorForm = document.getElementById('color-form')
 const seedColorInput = document.getElementById('seed-color-input')
-const modeDropdown = document.getElementById('mode-dropdown')
+const schemeDropdown = document.getElementById('scheme-dropdown')
 const generatedPalette = document.getElementById('generated-palette')
+const footerEl = document.getElementById('footer')
 let schemeMode = ''
 let seedColor = ''
 let colorCount = 0   // # of colors to fetch for chosen mode
@@ -45,8 +46,27 @@ colorForm.addEventListener('submit', (e) => {
 				fetchedPaletteArray.push(color.hex.value)
 			})
 			createHtml()
+			footerEl.innerHTML = `
+			<p>Click any color to copy its hex value.</p>
+			<p>Click here to copy all hex values.</p>`
 		})
 })
+
+generatedPalette.addEventListener('click', (event) => {
+	const colorBlock = event.target.closest('.color')
+	console.log(colorBlock)
+	if (colorBlock) {
+		copyHexValue(colorBlock)
+	}
+	else {
+		console.log(`not colorblock`);
+	}
+})
+
+async function copyHexValue(colorBlock) {
+	console.log(colorBlock.id)
+	await navigator.clipboard.writeText(colorBlock.id)
+}
 
 function createHtml() {
 	fetchedPaletteArray.forEach(colorInArray => {
@@ -56,6 +76,7 @@ function createHtml() {
 		const hexLabel = document.createElement('p')
 
 		colorWrapper.classList.add('color')
+		colorWrapper.id = hexValue
 		colorBox.classList.add('color-box')
 		colorBox.style.backgroundColor = hexValue
 		hexLabel.classList.add('hex-label')
@@ -65,6 +86,9 @@ function createHtml() {
 		colorWrapper.appendChild(colorBox)
 		colorWrapper.appendChild(hexLabel)
 		currentColorIndex++
+
+		// must be assigned AFTER elements with .color are created.
+		const colors = generatedPalette.querySelectorAll('.color')
 	})
 }
 
