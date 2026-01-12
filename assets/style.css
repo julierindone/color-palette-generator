@@ -1,268 +1,322 @@
 :root {
-   --tint-ice-blue: #dde8eb;
-   --light-ice-blue: #bdd3d8;
-   --ice-blue: #9dbec5;
-   --medium-ice-blue: #7da8b3;
-   --dark-ice-blue: #5d929f;
-   --darker-ice-blue: #45686F;
-   --darkest-ice-blue: #30484D;
-   --white: #f8f8f8;
-   --black: #121212;
-	--black-border: solid .2px #000000;
-   --max-width: 900px;
-   --sides: 3%;
+	--white: #f8f8f8;
+	--black: #151515;
+	--black-accent: #000000dd;
+	--black-border: solid .2px var(--black-accent);
+	--max-width: 900px;
 	--btn-color: #31d3d6;
+	--black-text-shadow:
+		1.25px 1.25px .25px var(--black-accent),
+		0.1px -0.1px 0 var(--black-accent),
+		-0.15px 0.15px 0 var(--black-accent),
+		-0.1px -0.1px 0 var(--black-accent);
+	--input-font-size: clamp(1.15rem, -0.1rem + 2.7vw, 1.38rem);
+	--container-input-font-size: clamp(1.15rem, 8.5cqw, 1.34rem);
 }
 
 /* ========== LAYOUT ========== */
 
 html {
-   height: 100dvh;
+	height: 100dvh;
 }
 
 body {
-   height: 100%;
-   display: flex;
-   gap: 1em;
-   flex-direction: column;
-   background-color: var(--black);
-   color: var(--white);
-   padding-inline: var(--sides);
+	color: var(--white);
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	background-color: var(--black);
+	padding-block: 0.4vh 2vh;
 }
 
-header,
 main,
 footer {
-   margin-inline: auto;
-   width: min(100%, var(--max-width));
+	width: min(97%, var(--max-width) - 40px);
+	padding-inline: 3.5%;
+	margin-inline: auto;
 }
 
 header {
-   flex: 0 1 auto;
-   margin-block: 1.4em 0.7em;
+	flex: 0 1 auto;
+	margin-inline: auto;
+	padding-inline: 1%;
+	width: min(98%, (var(--max-width) - 40px));
 }
 
 main {
-   flex: 1 0 auto;
-   display: flex;
-   flex-direction: column;
-   flex-wrap: nowrap;
-   gap: 1em;
-}
-
-footer {
-	margin-inline: 0;
-      flex: 0 1 auto;
+	flex: 1 0 auto;
 	display: flex;
 	flex-direction: column;
-	font-size: clamp(1rem, 0.7rem + 0.7vw, 1.2rem);
-	font-weight: 300;
-
-	> div.instructions {
-		align-self: center;
-
-		> p {
-			text-align: left;
-			letter-spacing: 0.05em;
-			font-weight: 300;
-		}
-
-		p + p {
-			margin-top: .31em;
-      }
-   }
+	gap: 1em;
+	margin-top: 1.7em;
 }
 
 /* ========== TYPOGRAPHY ========== */
 
-h1, p, form {
-   font-family: "Geom", sans-serif;
-   text-align: center;
-   font-optical-sizing: auto;
-   font-style: normal;
+h1,
+header,
+form,
+button {
+	font-family: "Geom", sans-serif;
+	font-weight: 600;
+	text-align: center;
+	text-wrap: balance;
 }
 
 /* ========== HEADER ========== */
 
 header {
-   h1, p.subheading {
-      line-height: 1.2;
-      text-wrap: balance;
-      letter-spacing: 0.011em;
-   }
+	letter-spacing: 0.04em;
 
-   h1 {
-      font-size: clamp(1rem, 6.6vw, 4.4rem);
-      font-variant: petite-caps;
-      width: min(95%, (var(--max-width) - 2rem));
-   }
+	> h1 {
+		font-size: clamp(3.8rem, 8.09vw, 4.8rem);
+		font-variant: petite-caps;
+		line-height: 1.2;
+	}
 
-   p.subheading {
-      font-size: clamp(1rem, 0.5rem + 4vw, 2.4rem);
-      font-weight: 500;
-      font-variant: all-petite-caps;
-      max-width: 93%;
-   }
+	> p.subheading {
+		font-size: clamp(1.8rem, 0.1rem + 3.67vw, 2.25rem);
+		font-weight: 400;
+		word-spacing: 0.07em;
+		line-height: 1;
+		font-variant: all-petite-caps;
+		margin-top: -0.19em;
+	}
 }
 
 /* ========== FORM ========== */
 
-input, select {
+input,
+select {
 	cursor: pointer;
 }
 
 form {
-   display: flex;
-   flex-wrap: wrap;
-   gap: 0.9em;
-   align-content: stretch;
-   justify-content: stretch;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5em 0.6em;
+	align-content: stretch;
+	justify-content: stretch;
+	font-size: var(--input-font-size);
+	font-weight: 700;
 
-   > * {
-      height: 47px;
-      font-size: 1rem;
-      padding-block: .5px;
-   }
-}
+	> * {
+		height: 47px;
+		font-variant: all-petite-caps;
+	}
 
-.seed-color-input-wrapper {
-   display: flex;
-   flex: 1 0 47px;
-   align-items: center;
-   max-width: 10rem;
-   border: solid  0.75px var(--white);
+	.seed-color-input-wrapper {
+		container: inputs / inline-size;
+		display: flex;
+		flex: 2 1 10.4rem;
+		border: solid 1.4px var(--white);
+		justify-content: center;
+		align-items: center;
 
-   > input[type="color"] {
-      font-size: .5em;
-      min-height: 100%;
-      width: 100%;
-      border: var(--black-border);
-      outline: none;
-   }
+		p.seed-color-overlay {
+			z-index: 5;
+			position: absolute;
+			color: var(--black);
+			pointer-events: none;
+			padding-inline: 0.75rem;
+		}
 
-   > input[type="color"]::-webkit-color-swatch-wrapper {
-      padding: 0;
-   }
-}
+		> input[type="color"] {
+			min-height: 100%;
+			width: 100%;
+			border: var(--black-border);
+			border-inline-width: 1.6px;
+			z-index: 0;
 
-.dropdown-wrapper {
-   container-type: inline-size;
-   container-name: dropdown;
-   flex: 2 1 13rem;
-	border: solid 1px var(--white);
+			&::-webkit-color-swatch-wrapper {
+				padding: 2px 1px;
+			}
 
-	select.scheme-dropdown {
-      height: 100%;
-      width: 100%;
-      border: var(--black-border);
-      font-size: 1rem;
-      font-weight: 500;
-      text-align: center;
-   }
-}
+			&::-webkit-color-swatch {
+				border: 1px solid var(--black);
+			}
+		}
+	}
 
-/* ========== BUTTON ========== */
+	.dropdown-wrapper {
+		container: inputs / inline-size;
+		flex: 2 1 10.4rem;
+		border: solid 1px var(--white);
+		background-color: var(--white);
 
-.create-palette-btn {
-   flex: 1 1 9rem;
-   font-size: 1.1rem;
-   font-weight: 600;
-	border: none;
-	border-radius: 3em;
-	padding: 10px 20px;
-   color: var(--white);
-	text-shadow: 0 -.25px 2.5px var(--black);
-	position: relative;
-	overflow: hidden;
-	transition: background 0.3s ease;
-	background-color: white;
-	background: linear-gradient(to bottom, var(--btn-color), color-mix(in srgb, var(--btn-color), black 55%));
-	/* TODO: I don't think this is working. */
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-}
-
-/* The shiny/glossy overlay effect */
-.create-palette-btn::before {
-	content: '';
-      position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 50%;
-	/* Creates a transparent white gradient overlay for the "shine" */
-	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
-	border-radius: 5px 5px 0 0;
-	opacity: 1;
-	transition: opacity 0.3s ease;
-}
-
-.create-palette-btn:hover {
-	/* Slightly darker on hover */
-	background: linear-gradient(to bottom, color-mix(in srgb, var(--btn-color), black 10%), color-mix(in srgb, var(--btn-color), black 30%));
-}
-
-.create-palette-btn:hover::before {
-	opacity: 0.8;
-	/* Subtle change to shine on hover */
-}
-
-.create-palette-btn:active {
-	transform: translateY(1px);
-	/* Pushed effect on click */
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		select.scheme-dropdown {
+			text-align: center;
+			background-color: var(--white);
+			border: var(--black-border);
+			height: 100%;
+			width: 100%;
+		}
+	}
 }
 
 /* ========== PALETTE ========== */
-
 #generated-palette {
-   flex: 1 1 auto;
-   display: grid;
-   grid-auto-flow: column;
-   grid-template-columns: auto;
-   margin-inline: .25em;
+	flex: 1 1 auto;
+	height: 100%;
+	display: grid;
+	grid-auto-flow: column;
+	grid-template-columns: auto;
 	background: linear-gradient(in hsl longer hue 90deg, #b36a9b80, #31d3d680);
-	opacity: 1;
 
-   > div.color {
-      display: grid;
+	> div.color {
+		display: grid;
 		grid-template-rows: 1fr;
-      gap: .25em;
-      height: 100%;
+		gap: .25em;
+		height: 100%;
+		z-index: 4;
 
-      > p.hex-label {
-         padding: 0.2em 0.4em;
-      }
-   }
+		> p.hex-label {
+			font-family: 'Poppins', sans-serif;
+			font-size: clamp(1rem, 2.9vw, 1.1rem);
+			letter-spacing: 0.03em;
+			padding: 0.2em 0.4em;
+			;
+		}
+	}
 }
 
+/* ========== FOOTER ========== */
+footer > p#click-any-color {
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	font-size: clamp(0.72rem, 3.3vw, 0.925rem);
+	font-weight: 300;
+	color: var(--white);
+	opacity: .9;
+	font-style: italic;
+	text-align: center;
+	letter-spacing: 0.04em;
+	text-transform: lowercase;
+	margin-top: 0.6em;
+}
+
+/* ========== BUTTONS ETC. ========== */
+#footer > .hidden {
+	display: none;
+}
+
+.btn {
+	color: var(--white);
+	font-variant: all-petite-caps;
+	letter-spacing: 0.025em;
+	text-shadow: var(--black-text-shadow);
+	border: 0.1px solid var(--btn-color);
+	border-radius: 1.15rem;
+	width: 100%;
+	transition: background 0.3s ease;
+	background: linear-gradient(to bottom, var(--btn-color), color-mix(in srgb, var(--btn-color), black 65%));
+	padding: 0 0.7em 0.2em 0.7em;
+
+	&:hover {
+		background: linear-gradient(to bottom, color-mix(in srgb, var(--btn-color), black 20%), color-mix(in srgb, var(--btn-color), black 64%));
+	}
+
+	&:active {
+		transform: translateY(1px);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		background: linear-gradient(to bottom, color-mix(in srgb, var(--btn-color), black 30%), color-mix(in srgb, var(--btn-color), black 74%));
+	}
+}
+
+div#create-palette-btn-wrapper {
+	container: inputs / inline-size;
+	flex: 2 1 11rem;
+
+	#create-palette-btn {
+		height: 100%;
+		word-spacing: 0.04em;
+	}
+}
+
+#copy-all-btn {
+	font-size: clamp(1.28rem, 3vw, 1.5rem);
+	height: 47px;
+	width: 100%;
+	margin-top: 0.7em;
+}
+
+@container inputs (width < 225px) {
+	form {
+
+		> div.seed-color-input-wrapper > p.seed-color-overlay,
+		> div.dropdown-wrapper > select.scheme-dropdown,
+		> div#create-palette-btn-wrapper > input[type="submit"]#create-palette-btn {
+			font-size: var(--container-input-font-size);
+			text-wrap: balance;
+			line-height: 1;
+		}
+	}
+}
+
+/* =================================== */
+/* ========== MEDIA QUERIES ========== */
+/* =================================== */
+
 @media(width < 560px) {
-   form > .seed-color-input-wrapper {
-      max-width: unset;
-      flex: 2 0 47px;
-   }
+	body {
+		padding-block: 1.8dvh 2.2dvh;
+	}
 
-   #generated-palette {
-      grid-auto-flow: row;
+	main {
+		margin-top: 1em;
+	}
 
-      div.color {
-         grid-template-rows: 1fr;
+	header {
+		> h1 {
+			font-size: clamp(1rem, 0.05rem + 11.6vw, 3.8rem);
+			margin-top: -0.25em;
+		}
+
+		> p.subheading {
+			font-size: clamp(1rem, 0.2rem + 5vw, 1.8rem);
+			line-height: 1;
+			margin-top: -0.095em;
+		}
+	}
+
+	form {
+		gap: 0.7rem;
+		font-size: clamp(1rem, 0.049rem + 5vw, 1.26rem);
+
+		> * {
+			height: 38px;
+		}
+
+		& .seed-color-input-wrapper {
+			border: unset;
+		}
+	}
+
+	#generated-palette {
+		grid-auto-flow: row;
+
+		div.color {
+			grid-template-rows: 1fr;
 
 			> div.color-box {
-            grid-area: 1 / 1 / 2 / 2;
-            z-index: 5;
-         }
+				grid-area: 1 / 1 / 2 / 2;
+				z-index: 5;
+			}
 
-         > p.hex-label {
-            grid-area: 1 / 1 / 2 / 2;
-            z-index: 10;
-            align-self: center;
-            text-shadow: 0 0 2px var(--black);
-            -webkit-text-stroke: 0.5px #000000d0;
-            font-weight: 800;
-            letter-spacing: 0.01em;
-            font-size: clamp(1rem, 0.3rem + 4vw, 1.4rem);
-            text-transform: lowercase;
-         }
-      }
-   }
+			> p.hex-label {
+				grid-area: 1 / 1 / 2 / 2;
+				z-index: 10;
+				align-self: center;
+				font-size: clamp(1rem, 0.35rem + 4.5vw, 1.5rem);
+				font-weight: 700;
+				text-transform: uppercase;
+				text-shadow: var(--black-text-shadow);
+				-webkit-text-stroke: 0.225px #000000;
+			}
+		}
+	}
+
+	#copy-all-btn {
+		font-size: clamp(1rem, 5.3vw, 1.2rem);
+		height: 40px;
+	}
 }

@@ -1,17 +1,16 @@
 const colorForm = document.getElementById('color-form')
+const seedColorOverlay = document.getElementById('seed-color-overlay')
 const seedColorInput = document.getElementById('seed-color-input')
 const schemeDropdown = document.getElementById('scheme-dropdown')
 const generatedPalette = document.getElementById('generated-palette')
-const footerEl = document.getElementById('footer')
 let schemeMode = ''
 let seedColor = ''
-let colorCount = 0   // # of colors to fetch for chosen mode
+let colorCount = 0
 let currentColorIndex = 0
 let fetchedPaletteArray = []
 
 createOptions()
 
-// input box & button updated with seedColor
 seedColorInput.addEventListener('mouseleave', (event) => {
 	setTimeout(() => {
 		seedColor = event.target.value
@@ -23,6 +22,8 @@ seedColorInput.addEventListener('mouseleave', (event) => {
 colorForm.addEventListener('submit', (e) => {
 	e.preventDefault()
 	resetAll()
+
+	// TODO: This should all be in a function.
 
 	let formValues = Object.fromEntries(new FormData(colorForm));
 	({ seedColor, schemeMode } = formValues)
@@ -46,25 +47,18 @@ colorForm.addEventListener('submit', (e) => {
 				fetchedPaletteArray.push(color.hex.value)
 			})
 			createHtml()
-			footerEl.innerHTML = `
-			<p>Click any color to copy its hex value.</p>
-			<p>Click here to copy all hex values.</p>`
+			addCopyArrayBtn()
 		})
 })
 
 generatedPalette.addEventListener('click', (event) => {
 	const colorBlock = event.target.closest('.color')
-	console.log(colorBlock)
 	if (colorBlock) {
 		copyHexValue(colorBlock)
-	}
-	else {
-		console.log(`not colorblock`);
 	}
 })
 
 async function copyHexValue(colorBlock) {
-	console.log(colorBlock.id)
 	await navigator.clipboard.writeText(colorBlock.id)
 }
 
@@ -86,9 +80,6 @@ function createHtml() {
 		colorWrapper.appendChild(colorBox)
 		colorWrapper.appendChild(hexLabel)
 		currentColorIndex++
-
-		// must be assigned AFTER elements with .color are created.
-		const colors = generatedPalette.querySelectorAll('.color')
 	})
 }
 
@@ -96,18 +87,41 @@ function resetAll() {
 	seedColor = ''
 	currentColorIndex = 0
 	fetchedPaletteArray = []
+
 	generatedPalette.replaceChildren()
 	generatedPalette.style.background = 'none'
 }
 
-// ToDo: add removal of dashes; store counts for palettes with fewer colors
 function createOptions() {
-	const optionList = [['monochrome', 5], ['monochrome-dark', 5], ['monochrome-light', 5], ['analogic', 5], ['complement', 2], ['analogic-complement', 4], ['triad', 3], ['quad', 4]]
+	// TODO: add removal of dashes
+	const optionList = [
+		['monochrome', 5],
+		['monochrome-dark', 5],
+		['monochrome-light', 5],
+		['analogic', 5],
+		['complement', 2],
+		['analogic-complement', 4],
+		['triad', 3],
+		['quad', 4]]
+
 	let optionsHtml = `
 		<option value=""
-		class="scheme-option">Select a color scheme</option>`
-	optionList.forEach(optionType =>
+		class="scheme-option">Select scheme</option>`
+
+		optionList.forEach(optionType =>
 		optionsHtml += `<option value="${optionType[0]}" data-count=${optionType[1]}>${optionType[0]}</option>`
 	)
+
 	schemeDropdown.innerHTML = optionsHtml
 }
+
+function addCopyArrayBtn() {
+	const hiddenClass = document.querySelectorAll('.hidden')
+	hiddenClass.forEach(instance => instance.style.display = 'block')
+
+	document.getElementById('copy-all-btn').addEventListener('click', () => {
+		const hexValueString = fetchedPaletteArray.join(', ')
+		navigator.clipboard.writeText(hexValueString)
+	})
+}
+

@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Color Scheme Generator</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geom:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/reset.css">
-<link rel="stylesheet" href="assets/style.css">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Color Scheme Generator</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Geom:ital,wght@0,300..900;1,300..900&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="assets/reset.css">
+	<link rel="stylesheet" href="assets/style.css">
 </head>
 
 <body>
 	<header>
-		<h1>Color Palette Generator</h1>
-		<p class="subheading">It's simply brilliant.</p>
+		<h1>Simply Brilliant</h1>
+		<p class="subheading">Color Palette Generator</p>
 	</header>
 	<main>
 		<form id="color-form">
 			<div class="seed-color-input-wrapper">
+				<p class="seed-color-overlay">Select color</p>
 				<input type="color"
 				id="seed-color-input"
 				class="seed-color-input"
@@ -31,19 +33,26 @@
 					id="scheme-dropdown"
 					name="schemeMode"
 					class="scheme-dropdown"
-					required
-				></select>
+					required>
+				</select>
 			</div>
-			<input type="submit" value="Create Palette" class="create-palette-btn">
+			<div id="create-palette-btn-wrapper">
+				<input
+				id="create-palette-btn"
+				type="submit"
+				value="Create Palette"
+				class="btn create-palette-btn" />
+			</div>
 		</form>
 		<div id="generated-palette"></div>
 	</main>
 	<footer id="footer">
-		<div class="instructions">
-			<P>1. Choose a color.</P>
-			<p>2. Select a color scheme.</p>
-			<p>3. Generate your palette!</p>
-		</div>
+		<button id="copy-all-btn" class="btn hidden">
+			Click to copy all hex values
+		</button>
+		<p id="click-any-color" class="hidden">
+			click any color to copy its value.
+		</p>
 	</footer>
 	<script src="index.js"></script>
 </body>
