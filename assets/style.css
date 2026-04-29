@@ -16,12 +16,23 @@
 
 /* ========== LAYOUT ========== */
 
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd {
+	margin: 0 auto;
+	padding: 0;
+}
+
 html {
 	height: 100dvh;
+	font-size: 100%;
 }
 
 body {
 	color: var(--white);
+	min-height: 100dvh;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
@@ -85,6 +96,10 @@ header {
 }
 
 /* ========== FORM ========== */
+
+input, button, textarea, select {
+  font: inherit;
+}
 
 input,
 select {
@@ -181,17 +196,18 @@ form {
 }
 
 /* ========== FOOTER ========== */
+
 footer > p#click-any-color {
-	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-	font-size: clamp(0.72rem, 3.3vw, 0.925rem);
-	font-weight: 300;
+	font-family: 'Poppins', sans-serif;
+	font-size: clamp(0.72rem, 1.9vw, 0.85rem);
+	font-weight: 200;
 	color: var(--white);
 	opacity: .9;
 	font-style: italic;
 	text-align: center;
 	letter-spacing: 0.04em;
 	text-transform: lowercase;
-	margin-top: 0.6em;
+	margin-top: 0.7em;
 }
 
 /* ========== BUTTONS ETC. ========== */
